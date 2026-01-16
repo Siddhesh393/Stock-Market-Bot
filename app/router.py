@@ -1,55 +1,38 @@
 from app.safety import is_advice_request, refusal_message
 from app.coach import coach_response
 from app.market import market_response
+from app.mode import get_mode, set_mode
 
 
-def route_message(text: str) -> str:
+def route_message(chat_id: int, text: str) -> str:
     text = text.strip().lower()
 
-    # --- Session / Command Handling ---
-    if text in ["/start"]:
+    # --- Mode Switching ---
+    if text == "/mode coach":
+        set_mode(chat_id, "coach")
         return (
-            "👋 *Welcome to Investment Coach Bot*\n\n"
-            "I help you:\n"
-            "• Learn investing concepts (Beginner → Intermediate)\n"
-            "• Understand market news in a neutral way\n\n"
-            "⚠️ *Educational purposes only*\n"
-            "I do NOT provide stock tips or buy/sell recommendations.\n\n"
-            "Type `/help` to see what I can do."
-        )
-
-    if text in ["/help"]:
-        return (
-            "ℹ️ *How I can help*\n\n"
-            "📘 *Investment Coach*\n"
-            "• Stocks, ETFs, SIPs, Risk\n"
-            "• Explained with simple analogies\n\n"
-            "📰 *Market Commentary*\n"
-            "• Why markets moved today\n"
-            "• Macro & news-based summaries\n\n"
-            "🚫 I cannot give:\n"
-            "• Stock picks\n"
-            "• Intraday tips\n"
-            "• Guaranteed returns\n\n"
-            "Type `/end` to finish the session.\n"
+            "🎓 *Coach Mode Activated*\n\n"
+            "I’ll explain investing concepts using simple analogies.\n\n"
             "_Educational purposes only_"
         )
 
-    if text in ["/end", "/stop", "/quit"]:
+    if text == "/mode market":
+        set_mode(chat_id, "market")
         return (
-            "👋 *Session ended*\n\n"
-            "You can come back anytime to learn about investing or "
-            "understand market news.\n\n"
-            "_Educational purposes only_"
+            "📰 *Market Commentary Mode Activated*\n\n"
+            "I’ll provide neutral market summaries.\n\n"
+            "_No investment advice_"
         )
 
-    # --- Safety Guardrails (Highest Priority) ---
+    # --- Safety Guardrails ---
     if is_advice_request(text):
         return refusal_message()
 
-    # --- Market Commentary Mode ---
-    if any(keyword in text for keyword in ["market", "today", "news", "sensex", "nifty"]):
+    # --- Route Based on Mode ---
+    mode = get_mode(chat_id)
+
+    if mode == "market":
         return market_response(text)
 
-    # --- Default: Investment Coach Mode ---
+    # Default: Coach mode
     return coach_response(text)
