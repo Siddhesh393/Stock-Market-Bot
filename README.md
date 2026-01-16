@@ -1,4 +1,4 @@
-# 📈 MarketGuide Bot – Investment Learning & Market Commentary Assistant
+# 📈 StockMarket Bot – Investment Learning & Market Commentary Assistant
 
 Built an interactive chat-based assistant that helps users:
 1. Learn investing concepts (Beginner → Intermediate).
