@@ -2,7 +2,7 @@ import os
 import requests
 from fastapi import FastAPI, Request
 
-from app.router import route_message  # this now works
+from app.router import route_message
 
 app = FastAPI()
 
