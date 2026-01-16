@@ -1,10 +1,12 @@
-import os
-import requests
 from fastapi import FastAPI, Request
-
+import os, requests
 from app.router import route_message
 
 app = FastAPI()
+
+@app.get("/api/webhook")
+def health():
+    return {"status": "ok"}
 
 TELEGRAM_URL = f"https://api.telegram.org/bot{os.getenv('TELEGRAM_BOT_TOKEN')}"
 
