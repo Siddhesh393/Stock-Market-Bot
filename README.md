@@ -132,7 +132,9 @@ TELEGRAM_BOT_TOKEN=your_telegram_bot_token
 ### 4. Create a Telegram Bot
 
 Open Telegram → @BotFather
+
 Run /newbot
+
 Copy the bot token and add it to .env
 
 ### 5. Run Locally (Optional)
@@ -143,13 +145,17 @@ uvicorn api.index:app --reload
 ### 6. Deploy to Vercel
 
 Push the repo to GitHub
+
 Import the project in Vercel
+
 Add GEMINI_API_KEY and TELEGRAM_BOT_TOKEN as environment variables
+
 Deploy
 
 ### 7. Set Telegram Webhook
 
 After deployment:
+
 https://api.telegram.org/bot<YOUR_BOT_TOKEN>/setWebhook?url=https://your-project.vercel.app/api/webhook
 
 ### 8. Test the Bot
@@ -157,5 +163,7 @@ https://api.telegram.org/bot<YOUR_BOT_TOKEN>/setWebhook?url=https://your-project
 Open Telegram and try:
 
 /start
+
 /mode coach
+
 /mode market
