@@ -1,4 +1,3 @@
-# In-memory mode storage (OK for serverless demo)
 user_modes = {}
 
 DEFAULT_MODE = "coach"

@@ -8,11 +8,8 @@ def route_message(chat_id: int, text: str) -> str:
     raw_text = text.strip()
     text = raw_text.lower()
 
-    # =========================
-    # START / HELP COMMANDS
-    # =========================
     if text == "/start":
-        set_mode(chat_id, "coach")  # default mode
+        set_mode(chat_id, "coach")  
         return (
             "👋 *Welcome to Investment Coach Bot*\n\n"
             "I help you:\n"
@@ -21,8 +18,8 @@ def route_message(chat_id: int, text: str) -> str:
             "⚠️ *Educational purposes only*\n"
             "I do NOT provide stock tips or buy/sell recommendations.\n\n"
             "Use:\n"
-            "`/mode coach` – Investment learning\n"
-            "`/mode market` – Market commentary\n\n"
+            "`/coach` – Investment learning\n"
+            "`/market` – Market commentary\n\n"
             "Type `/help` to see what I can do."
         )
 
@@ -40,15 +37,12 @@ def route_message(chat_id: int, text: str) -> str:
             "• Give intraday tips\n"
             "• Promise guaranteed returns\n\n"
             "Switch modes using:\n"
-            "`/mode coach`\n"
-            "`/mode market`\n\n"
+            "`/coach`\n"
+            "`/market`\n\n"
             "_Educational purposes only_"
         )
 
-    # =========================
-    # MODE SWITCHING
-    # =========================
-    if text == "/mode coach":
+    if text == "/coach":
         set_mode(chat_id, "coach")
         return (
             "🎓 *Coach Mode Activated*\n\n"
@@ -56,7 +50,7 @@ def route_message(chat_id: int, text: str) -> str:
             "_Educational purposes only_"
         )
 
-    if text == "/mode market":
+    if text == "/market":
         set_mode(chat_id, "market")
         return (
             "📰 *Market Commentary Mode Activated*\n\n"
@@ -64,19 +58,14 @@ def route_message(chat_id: int, text: str) -> str:
             "_No investment advice_"
         )
 
-    # =========================
-    # SAFETY GUARDRAILS
-    # =========================
+
     if is_advice_request(text):
         return refusal_message()
 
-    # =========================
-    # ROUTE BY MODE
-    # =========================
     mode = get_mode(chat_id)
 
     if mode == "market":
         return market_response(raw_text)
 
-    # Default → Coach Mode
+
     return coach_response(raw_text)
